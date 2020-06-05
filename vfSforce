@@ -1,0 +1,53 @@
+<apex:page standardController="Account" lightningStylesheets="true">
+    <script>
+        function showToast() {
+             sforce.one.showToast({
+                "title": "Success!",
+                "message": "Welcome to salesforce code crack.",
+                "type": "success"
+            });
+            
+        }
+            
+        function navToSObject(){
+            var accountId = document.getElementById('acctId').value;
+            sforce.one.navigateToSObject(accountId);
+        }
+    
+    	function navToURL(){
+            //var pageName = prompt('Visualforce page name:'); 
+  			            
+            var myUrl = '/apex/vfMessage';
+            
+             if( (typeof sforce != 'undefined') && (sforce != null) ) {
+      			// Salesforce1 navigation
+      			sforce.one.navigateToURL(myUrl);
+    		} else {
+      			// Set the window's URL using a Visualforce expression
+     			window.location.href =   myUrl;
+    		}
+        }
+    
+    	function navToRel(){
+            var accountId = document.getElementById('acctId').value;
+            sforce.one.navigateToRelatedList('Contacts', accountId);
+      }
+        
+    </script>
+    
+    <apex:form >
+        <apex:page >
+            <apex:commandButton value="Show Toast" onclick="showToast();" />
+        </apex:page>
+        <apex:pageBlock title="My Content" mode="edit">
+               
+            You are viewing the {!account.name} account. <p/>
+            Change Account Name: <p/> 
+            <input id="acctId" type="text" value="{!account.id}"/>
+            <apex:inputField id="acctName" value="{!account.name}"/> <p/>
+            <apex:commandButton value="navigateToSObject" onclick="navToSObject();" /> 
+            <apex:commandButton value="navigateToURL" onclick="navToURL();" /> 
+            <apex:commandButton value="navigateToRelatedList" onclick="navToRel();" /> 
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
